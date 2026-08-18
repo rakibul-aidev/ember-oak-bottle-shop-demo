@@ -95,7 +95,8 @@ body.paused .env-layer{animation-play-state:paused}
   margin:0 0 14px;opacity:calc(.4+.6*var(--k,0))}
 .band h2{font-family:var(--font-display);font-weight:500;font-size:clamp(30px,4.4vw,58px);line-height:1.08;margin:0 0 14px;letter-spacing:-.01em}
 .band p{font-family:var(--font-body);font-weight:400;font-size:clamp(15px,1.5vw,18px);line-height:1.55;color:var(--ink-dim);max-width:38ch;margin:0}
-.band h2 .w{display:inline-block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em}
+.band h2 .w{display:inline-block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em;margin-right:.26em}
+.band h2 .w:last-child{margin-right:0}
 .band h2 .w>span{display:inline-block;--kc:clamp(0,(var(--k,0) - var(--th,0))*2.8,1);opacity:var(--kc);
   transform:translateY(calc((1 - var(--kc))*30px));
   transition:opacity 0s,transform 0s}
@@ -455,7 +456,7 @@ footer a{color:var(--amber)}
       w.className = 'w';
       w.style.setProperty('--th', (wi / words.length * 0.7 + r() * 0.08).toFixed(3));
       var inner = document.createElement('span');
-      inner.textContent = word + (wi < words.length - 1 ? ' ' : '');
+      inner.textContent = word;
       w.appendChild(inner);
       el.appendChild(w);
     });
