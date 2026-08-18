@@ -438,7 +438,13 @@ footer a{color:var(--amber)}
   var threadPath = document.getElementById('threadPath');
   var bandEls = Array.prototype.slice.call(document.querySelectorAll('.band'));
 
-  var VIDEO_URL = 'assets/hero-scrub.mp4';
+  // Prefer WebM/VP9 (open codec, no proprietary-decoder dependency) when the browser
+  // reports real support for it; fall back to H.264/MP4 otherwise. Two independently
+  // encoded files, not a transcode-on-the-fly -- this only picks which one to fetch.
+  var canWebm = video.canPlayType('video/webm; codecs="vp9,opus"');
+  var VIDEO_URL = (canWebm === 'probably' || canWebm === 'maybe')
+    ? 'assets/hero-scrub.webm'
+    : 'assets/hero-scrub.mp4';
   var POSTER_URL = 'assets/hero-poster.jpg';
 
   poster.style.backgroundImage = "url('" + POSTER_URL + "')";
