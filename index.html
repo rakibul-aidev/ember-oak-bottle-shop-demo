@@ -562,6 +562,16 @@ footer a{color:var(--amber)}
   }, { threshold: 0 });
   io.observe(hero);
 
+  /* ---------- band-one load-in ramp: drives itself for its first ~1.4s regardless of
+     scroll, since the scroll-lerp loop above goes idle at rest and would otherwise never
+     advance a time-based ramp on a page nobody has scrolled yet ---------- */
+  var loadRampStart = performance.now();
+  function loadRampTick(now){
+    updateCaptions(shown);
+    if (now - loadRampStart < 1500) requestAnimationFrame(loadRampTick);
+  }
+  requestAnimationFrame(loadRampTick);
+
   /* ---------- caption bands ---------- */
   var smoothstep = function(p,e0,e1){ var t = Math.min(1, Math.max(0, (p - e0) / (e1 - e0))); return t*t*(3-2*t); };
   var bandCache = bandEls.map(function(){ return { op:-1 }; });
@@ -582,7 +592,7 @@ footer a{color:var(--amber)}
       var ramp = Math.min(0.025, (b - a) * 0.35);
       var k = Math.min(1, Math.max(0, (p - a) / ramp));
       if (isFirst){
-        var loadK = Math.min(1, performance.now() / 4000);
+        var loadK = Math.min(1, performance.now() / 1400);
         k = Math.max(k, loadK);
       }
       band.style.setProperty('--k', k.toFixed(3));
