@@ -113,9 +113,11 @@ body.paused .env-layer{animation-play-state:paused}
 @keyframes cuebob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 .hero.past-start .scroll-cue{opacity:0}
 
-/* static hero (mobile / reduced motion) */
+/* static hero (tablets / landscape phones / reduced motion). Portrait phones get a
+   cropped video scrub instead of the static fallback -- composition and crop verified
+   against extracted frames before enabling; see feedback_scroll_scrub_gotchas memory. */
 .static-hero{display:none}
-@media (max-width:720px),(orientation:portrait) and (max-width:1024px),(orientation:portrait) and (pointer:coarse),
+@media (orientation:portrait) and (min-width:600px) and (max-width:1024px),(orientation:portrait) and (pointer:coarse) and (min-width:600px),
 (orientation:landscape) and (pointer:coarse) and (max-height:560px),(prefers-reduced-motion:reduce){
   .hero{height:auto}
   .stage{position:relative;height:92vh}
@@ -474,9 +476,8 @@ footer a{color:var(--amber)}
 
   /* ---------- static-hero gate (5 conditions, must match CSS media queries exactly) ---------- */
   var GATES = [
-    '(max-width: 720px)',
-    '(orientation: portrait) and (max-width: 1024px)',
-    '(orientation: portrait) and (pointer: coarse)',
+    '(orientation: portrait) and (min-width: 600px) and (max-width: 1024px)',
+    '(orientation: portrait) and (pointer: coarse) and (min-width: 600px)',
     '(orientation: landscape) and (pointer: coarse) and (max-height: 560px)',
     '(prefers-reduced-motion: reduce)'
   ];
